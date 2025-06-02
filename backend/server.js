@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 dotenv.config();
 const cors = require('cors');
 const PORT = process.env.PORT || 5000;
+const { loginUser,registerUser } = require('./controllers/authController')
+
 
 const app = express();
 app.use(express.json());
@@ -23,7 +25,15 @@ app.get("/",(req,res) => {
     res.send('Hello, World!');
 });
 
+app.post("/register",(req,res) => {
+    const { name, email, password } = req.body;
+    registerUser(req, res);
+})
 
+app.post("/login",(req,res) => {
+    const { name, email, password } = req.body;
+    loginUser(req, res);
+})
 
 app.listen(PORT,() => {
     console.log(`server is running on port ${process.env.PORT}`);
